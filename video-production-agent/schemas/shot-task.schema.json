@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/daily-3d-science-video/shot-task.schema.json",
+  "title": "Shot Task",
+  "type": "object",
+  "required": ["shot_id", "duration_seconds", "visual_description", "production_method", "status"],
+  "properties": {
+    "shot_id": {"type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"},
+    "title": {"type": "string"},
+    "duration_seconds": {"type": "number", "exclusiveMinimum": 0},
+    "timecode": {"type": "object"},
+    "narration": {"type": "string"},
+    "visual_description": {"type": "string", "minLength": 1},
+    "production_method": {"type": "string", "enum": ["blender", "ai_video", "ai_image", "stock", "motion_graphics"]},
+    "method_reason": {"type": "string"},
+    "references": {"type": "array", "items": {"type": "string"}},
+    "prompt": {"type": "string"},
+    "negative_prompt": {"type": "string"},
+    "continuity_constraints": {"type": "array", "items": {"type": "string"}},
+    "acceptance_checks": {"type": "array", "items": {"type": "string"}},
+    "status": {"type": "string", "enum": ["pending", "running", "generated", "audited", "approved", "blocked", "failed", "rejected"]},
+    "attempts": {"type": "array"},
+    "selected_artifact": {"type": ["string", "null"]},
+    "review": {"type": "object"}
+  },
+  "additionalProperties": true
+}
