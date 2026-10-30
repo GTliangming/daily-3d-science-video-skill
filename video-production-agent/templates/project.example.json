@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "sample-science-video",
+  "title": "Sample science explainer",
+  "language": "zh-CN",
+  "target": {
+    "platform": "wechat_channels",
+    "aspect_ratio": "16:9",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "expected_duration_seconds": 180
+  },
+  "visual_bible": {
+    "style": "photorealistic cinematic 3D science explainer",
+    "product_reference": [],
+    "character_reference": [],
+    "continuity_rules": [],
+    "subtitle_safe_area": "bottom 15 percent"
+  },
+  "fact_checks": [],
+  "shots": [],
+  "audio": {
+    "narration_required": true,
+    "music_required": true,
+    "sound_effects_required": false
+  },
+  "approvals": {
+    "paid_generation_authorized": false,
+    "plan_approved": false,
+    "rough_cut_approved": false,
+    "final_approved": false,
+    "waivers": []
+  },
+  "output": {
+    "directory": "renders",
+    "review_file": "renders/review.mp4",
+    "final_file": "renders/final.mp4"
+  }
+}
