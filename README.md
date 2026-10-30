@@ -1,50 +1,104 @@
-# Daily 3D Science Video Skill
+# Daily 3D Science Video
 
-一个面向多种大语言模型的交互式 Skill，用于把日常用品、家用电器和生活现象，转化为**写实电影级 3D 科普视频**。
+一个包含**视频策划 Skill**与**视频生产 Agent Skill**的双模式项目，用于把日常用品、家用电器和生活现象转化为写实电影级 3D 科普视频。
 
-## 目标
+## 两种工作模式
 
-帮助创作者完成从选题到成片的完整策划与制作：
-- 选题判断与传播角度
-- 科学原理检索、事实核验
-- 视频脚本、旁白与字幕
-- 分镜与镜头设计
-- 3D 结构演示、AI 视频素材与后期方案
-- 成片质量检查与发布复盘
+### A. 视频策划 Skill（原有能力）
 
-## 设计原则
+负责选题、科学研究、事实核验、脚本、旁白、分镜、视觉设计和制作方案。它的交付物是经过确认的策划包，不会把“写出提示词”说成“已经生成视频”。
 
-1. **智能混合式交互**：关键节点征求用户意见，次要决策由模型提出合理默认值；不把流程变成冗长问卷。
-2. **质量优先**：AI 负责提效，人负责事实审核、审美判断和最终剪辑。
-3. **科学准确**：不把模型生成内容当作事实；结构、数值、工作机制必须核验。
-4. **分工明确**：精确结构和物理过程优先使用 Blender 等 3D 工具；人物、环境和生活化镜头可使用 AI 视频模型。
-5. **跨模型可用**：不依赖特定厂商 API、插件或私有工具。
+### B. 视频生产 Agent Skill（新增）
 
-## 快速使用
+负责把已确认的策划包变成真实视频产物：镜头任务拆解、素材生成、Blender 3D 制作、音频、FFmpeg 合成、自动质检、返工和 MP4 交付。
 
-将本仓库作为 Skill 提供给支持技能/指令文件的 AI 助手，并让它读取根目录的 `SKILL.md`。
+## 如何选择
 
-开始时只需告诉 AI 一个主题，例如：
-- 吹风机为什么能吹出热风？
-- 电热毯为什么能发热？
-- 微波炉为什么能加热食物？
-- 保温杯为什么能保温？
+将本仓库提供给支持 Skill 的 AI 助手，并让它读取根目录 `SKILL.md`。
 
-AI 会先分析主题并给出可选切入角度，再在选题、事实、脚本、分镜等关键节点与你确认。
+开始时可以直接说：
+- “使用视频策划模式，帮我策划一期吹风机工作原理。”
+- “使用视频生产 Agent 模式，根据这份分镜实际生成视频。”
+- “先策划，再进入视频生产。”
+
+如果用户没有明确选择，入口 Skill 应询问使用哪种模式。
+
+## 生产模式的技术原则
+
+- **Blender**：精确结构、剖切、爆炸图、机械运动和物理过程示意。
+- **AI 视频**：人物、家庭环境、产品使用场景和电影化过场。
+- **AI 图片/授权素材**：参考图、背景和静态插入素材。
+- **FFmpeg**：视频拼接、音频混合、字幕和交付编码。
+- **Python**：任务状态、素材清单、校验、自动化和审计。
+- **Provider Adapter**：统一模型服务接口，避免把单一厂商写死。
+
+首个版本提供标准化项目/镜头数据、任务状态管理、项目校验和生产规范；暂不声称已经内置 MiniMax、可灵或 TTS 的可用 API 集成。实际接入前必须核实当前 API、凭证、价格和输出格式。所有付费生成默认需要用户确认。
 
 ## 目录
 
-- `SKILL.md`：Skill 主入口和完整工作流
-- `references/content-strategy.md`：选题定位与传播策略
-- `references/fact-checking.md`：科学事实核验
-- `references/script-storyboard.md`：脚本与分镜设计
-- `references/visual-production.md`：3D、AI 视频与后期制作规范
-- `references/publishing-review.md`：发布、合规与数据复盘
-- `templates/production-templates.md`：可复用生产模板
+```text
+.
+├── SKILL.md                         # 双模式入口 + 原视频策划工作流
+├── references/                      # 原有策划参考
+├── templates/                       # 原有策划模板
+└── video-production-agent/
+    ├── SKILL.md                      # 视频生产 Agent 主流程
+    ├── references/
+    │   ├── pipeline.md
+    │   ├── provider-contract.md
+    │   └── quality-control.md
+    ├── schemas/
+    │   ├── video-project.schema.json
+    │   └── shot-task.schema.json
+    ├── templates/
+    │   ├── project.example.json
+    │   └── shot-task.example.json
+    └── scripts/
+        ├── validate_project.py
+        └── task_manager.py
+```
 
-## 推荐内容定位
+## 本地运行生产脚本
 
-聚焦普通人每天接触、却不一定理解其原理的物品和现象。优先考虑安全提醒、亲子解释、避免误用/浪费、关心家人等分享动机。单条视频只讲清楚一个核心原理。
+仅需 Python 3.10+，当前基础脚本使用 Python 标准库，不需要 Docker、数据库或第三方 Python 包。
+
+验证项目清单：
+
+```bash
+python video-production-agent/scripts/validate_project.py video-production-agent/templates/project.example.json
+```
+
+查看任务状态：
+
+```bash
+python video-production-agent/scripts/task_manager.py status path/to/project.json
+```
+
+认领镜头任务：
+
+```bash
+python video-production-agent/scripts/task_manager.py claim path/to/project.json SHOT_001
+```
+
+任务完成时，必须提供真实存在且非空的素材文件：
+
+```bash
+python video-production-agent/scripts/task_manager.py complete path/to/project.json SHOT_001 --artifact path/to/shot.mp4
+```
+
+标记失败或重试：
+
+```bash
+python video-production-agent/scripts/task_manager.py fail path/to/project.json SHOT_001 --reason "provider timeout"
+python video-production-agent/scripts/task_manager.py retry path/to/project.json SHOT_001 --reason "retry after provider recovery"
+```
+
+## 重要限制
+
+- 项目未附带可默认继承的第三方模型 API 额度或密钥。
+- 生产 Agent 需要在实际运行环境中具备 Blender、FFmpeg 和所选 Provider Adapter；缺少时必须报告阻塞。
+- 自动化检查不能替代科学事实审核、视觉连续性审核和最终人工验收。
+- 对素材、字体、音乐、人物肖像及平台 AI 内容标识要求，必须在交付前单独核查。
 
 ## 许可
 
