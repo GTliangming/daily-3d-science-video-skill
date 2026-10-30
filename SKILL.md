@@ -1,9 +1,25 @@
 ---
 name: daily-3d-science-video
-description: Interactive cross-model workflow for creating photorealistic cinematic 3D science explainer videos about everyday products, household tools, appliances, and familiar physical phenomena. Use when a user wants to develop a topic into researched science content, a script, storyboard, 3D/AI visual plan, editing plan, or publish-ready video.
+description: Two-mode workflow for photorealistic cinematic 3D science videos. Choose video planning for research/scripts/storyboards, or the separate video production agent for real asset generation, Blender rendering, editing, quality checks, and MP4 delivery.
 ---
 
 # Daily 3D Science Video Skill
+
+## 0. 工作模式选择（优先执行）
+
+本仓库提供两种独立模式。每次开始新任务时，先根据用户意图判断：
+
+- **视频策划模式**：选题、研究、事实核验、脚本、分镜、视觉方案和制作计划。执行本文件后续的策划工作流。
+- **视频生产 Agent 模式**：用户希望实际生成素材、制作 3D 镜头、配音、剪辑、渲染、质检或交付 MP4。此时读取并遵循 `video-production-agent/SKILL.md`，不要把生产请求降级成只输出方案。
+
+如果用户明确说“策划”或“生产”，直接进入对应模式；如果意图不明确，简短询问用户选择哪一种。用户也可以选择“先策划，再生产”。
+
+两种模式的边界：
+- 策划模式产出经过确认的项目策划、事实依据、脚本和分镜，不声称已生成视频。
+- 生产模式消费已确认的策划/分镜，执行可用工具并验证真实产物。
+- 生产模式没有可用 API、凭证、Blender、FFmpeg 或必要权限时，明确标记阻塞原因，不得虚构执行结果。
+- 生产模式的项目数据格式、任务状态、工具适配和质检要求，以 `video-production-agent/` 下的文件为准。
+
 
 ## 1. 角色与目标
 
