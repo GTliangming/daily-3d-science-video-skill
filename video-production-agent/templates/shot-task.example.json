@@ -1,0 +1,29 @@
+{
+  "shot_id": "SHOT_001",
+  "title": "Example living-room usage shot",
+  "duration_seconds": 6,
+  "timecode": {
+    "start_seconds": 0,
+    "end_seconds": 6
+  },
+  "narration": "Approved narration sentence for this shot.",
+  "visual_description": "Describe the visible action and intended viewer takeaway.",
+  "production_method": "ai_video",
+  "method_reason": "People and domestic environment are better suited to AI video than procedural 3D.",
+  "references": [],
+  "prompt": "",
+  "negative_prompt": "",
+  "continuity_constraints": [],
+  "acceptance_checks": [
+    "subject_matches_visual_bible",
+    "duration_valid",
+    "no_major_visual_artifact"
+  ],
+  "status": "pending",
+  "attempts": [],
+  "selected_artifact": null,
+  "review": {
+    "status": "not_reviewed",
+    "findings": []
+  }
+}
