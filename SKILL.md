@@ -179,6 +179,8 @@ description: Interactive cross-model workflow for planning and producing realist
 - 视觉制作：`references/visual-production.md`
 - 发布与复盘：`references/publishing-review.md`
 - 表格模板：`templates/production-templates.md`
+- 全片视觉设定：`templates/visual-bible-template.md`
+- 单镜头提示词文件：`templates/shot-prompt-file-template.md`
 
 ## 10. 专业 3D Skill 路由
 
