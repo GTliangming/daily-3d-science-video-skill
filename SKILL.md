@@ -190,6 +190,7 @@ description: Interactive cross-model workflow for planning and producing realist
 - **灯光与材质**：`skills/3d-lighting-materials/SKILL.md`，负责电影级布光、材质参数、纹理、反射、色彩管理和渲染一致性。
 - **动画与运动**：`skills/3d-animation-motion/SKILL.md`，负责产品机构、物理过程、人物动作、关键帧、约束、模拟和动作时间线。
 - **模型与资产制作**：`skills/3d-asset-modeling/SKILL.md`，负责资产清单、下载/改造/自建决策、模型质量、拆件、格式和授权登记。
+- **参考图一致性**：`skills/reference-image-consistency/SKILL.md`，负责 Visual Bible 风格锁定、主风格参考图、主体/结构锚点、模型适配提示词、分批生成和一致性验收。
 - **AI 视频提示词**：读取 `skills/3d-camera-cinematography/references/video-model-translation.md`，负责把摄影/场景方案转成图生视频或文生视频提示词。
 - **Blender 摄影机执行**：需要具体摄像机、Rig、关键帧方案时，读取 `skills/3d-camera-cinematography/references/blender-execution.md`。
 
@@ -201,6 +202,7 @@ description: Interactive cross-model workflow for planning and producing realist
 - 需要确定材质外观、灯光方案或跨镜头光照一致性时，加载灯光与材质 Skill。
 - 需要设计产品运动、内部机构、气流/热量等过程或人物动作时，加载动画与运动 Skill；涉及真实物理机制时必须先完成事实核验。
 - 需要确定模型从哪里获取、是否自建、如何拆件/检查/归档，或涉及素材许可证时，加载模型与资产制作 Skill；授权不明的下载资产不得进入正式成片。
+- 脚本和分镜确认、Visual Bible 草案形成后，进入参考图生产前，必须加载参考图一致性 Skill；先确认主风格锚点，再生成主体/结构锚点和分镜参考图，并执行分批验收。
 - 需要完整 3D 制作方案时，按需组合资产、场景、镜头、灯光材质和动画模块，不要求每个镜头都加载全部模块。
 - 多镜头任务：每个镜头单独输出执行卡，并检查连续性；每镜时长仍严格不超过 15 秒。
 
@@ -320,6 +322,8 @@ description: Interactive cross-model workflow for planning and producing realist
 6. 对连续性要求高的关键镜头构图参考图。
 
 参考图应有编号、文件名、用途、适用镜头范围和不能改变的特征。建立“镜头—参考图映射表”，明确每个镜头使用哪张参考图，以及参考图控制主体、结构、环境还是构图。
+
+本阶段必须调用 `skills/reference-image-consistency/SKILL.md`，执行“Visual Bible → 主风格锚点 → 主体/结构锚点 → 分镜参考图 → 一致性验收”的顺序。每张参考图都要生成独立完整提示词，明确全局风格锁定、主体/结构参考图用途、本图独有内容、负面约束和验收标准。不得一开始就为所有镜头分别生成互不关联的文生图提示词。
 
 如当前平台具备图像生成能力，可按批次生成参考图并让用户审核；否则输出可直接复制的参考图提示词和建议文件名，明确说明需要用户在外部图像工具生成。不得声称未实际生成的图片已经存在。用户确认视觉圣经和参考图后，才进入最终提示词打包。
 
