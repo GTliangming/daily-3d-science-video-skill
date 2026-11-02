@@ -211,3 +211,45 @@ When several shots are requested, output one card per shot and then a continuity
 
 Do not silently change an approved narration, scientific statement, visual style, or storyboard.
 If camera design exposes a story/science problem, flag it and propose a minimal correction for approval.
+
+
+## Shot Design v2 — mandatory narrative coverage and editability
+
+This section extends and overrides any interpretation that a storyboard row must map to one long AI-generated clip.
+
+### A shot is not a prompt timeline
+Distinguish:
+- **Narrative beat**: one unit of information.
+- **Editorial shot**: one continuous image in the final edit, with one dominant visual purpose.
+- **Generation clip**: one output from an AI/video/render operation.
+
+A single editorial shot normally maps to one generation clip. If the intended result requires a hard cut, a new location, a new shot size, or an independent action, create a separate editorial shot and generation clip. Do not put "0–4s wide, 4–9s macro, 9–15s side view" into one prompt and assume a video model will execute the cuts reliably.
+
+### Coverage before camera movement
+Before specifying camera movement, plan the visual coverage needed for the beat:
+- establishing/product context;
+- component/system overview;
+- close-up or macro detail;
+- mechanism/action;
+- comparison/result;
+- return to system context.
+
+Select only what serves the story. Avoid consecutive shots that show the same object at nearly the same scale and angle without adding new information.
+
+### Camera movement discipline
+- Default to a locked camera unless movement adds information.
+- One primary camera move per editorial shot. State its purpose.
+- Orbit is exceptional, not a default cinematic move. Use it only to reveal spatial relationships or multiple sides that cannot be understood otherwise; state start/end angle and what becomes visible.
+- Never use orbiting as a substitute for shot coverage.
+- If the viewer needs a new scale, angle, subject, or space, cut to a separately numbered shot.
+- Explicitly distinguish camera movement from subject movement.
+- Specify opening and ending composition, focal target, direction, speed profile, and what remains stationary.
+- Avoid vague phrases such as "cinematic camera movement", "slowly moves around the object", or "dynamic close-up".
+
+### AI generation suitability
+Classify each shot:
+- A — simple single action and one composition; suitable for one AI generation.
+- B — staged action or complex reference geometry; consider multiple clips or verified start/end-frame controls.
+- C — precise geometry, multi-part coordinated motion, or designed multi-shot montage; use Blender/precise 3D and edit in post where feasible.
+
+Do not promise exact cuts or time-coded action beats from a single AI prompt unless verified for the target model. Review actual output; model obedience is not guaranteed.
