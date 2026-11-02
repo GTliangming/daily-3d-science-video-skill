@@ -41,6 +41,10 @@ AI 会先分析主题并给出可选切入角度，再在选题、事实、脚�
 - `skills/3d-camera-cinematography/references/`：镜头语言、Blender 执行、AI 视频提示词规范
 - `skills/3d-scene-composition/SKILL.md`：专业 3D 场景构建、空间布局与连续性 Skill
 - `skills/3d-scene-composition/references/scene-layout-patterns.md`：产品、剖切、物理过程、人物场景和竖屏布局参考
+- `skills/3d-lighting-materials/SKILL.md`：专业灯光、材质、纹理、反射与渲染一致性
+- `skills/3d-lighting-materials/references/lighting-setups.md`：产品棚拍、生活场景、微距及常见材质布光参考
+- `skills/3d-animation-motion/SKILL.md`：产品机构、科学过程、人物动作与 Blender 动画执行
+- `skills/3d-animation-motion/references/animation-patterns.md`：产品启动、旋转机构、爆炸图、气流、热量和人物交互动画参考
 - `templates/3d-shot-execution-card.md`：单镜头执行卡
 - `templates/3d-shot-plan-template.json`：结构化镜头计划示例
 - `scripts/validate_shot_plan.py`：镜头计划结构与时长校验脚本
@@ -49,6 +53,8 @@ AI 会先分析主题并给出可选切入角度，再在选题、事实、脚�
 
 - **场景构建**：把分镜变成空间布局、主体/道具清单、前中后景、灯光材质基准和 Blender 场景结构。
 - **镜头设计**：把场景变成明确的景别、机位、焦距、运镜路径、焦点与连续性方案。
+- **灯光与材质**：建立可信的产品表面、反射、光影层次和跨镜头渲染基准。
+- **动画与运动**：将已核验的工作过程转化为关键帧、约束或模拟，确保动作有因果、可读且可复现。
 - **AI 视频翻译**：将镜头设计转成模型可执行提示词，并定义参考图、首尾帧和负面约束。
 
 每个独立镜头时长必须大于 0 秒且不超过 15 秒。可使用 `python scripts/validate_shot_plan.py templates/3d-shot-plan-template.json` 检查结构化镜头计划。
