@@ -45,6 +45,11 @@ AI 会先分析主题并给出可选切入角度，再在选题、事实、脚�
 - `skills/3d-lighting-materials/references/lighting-setups.md`：产品棚拍、生活场景、微距及常见材质布光参考
 - `skills/3d-animation-motion/SKILL.md`：产品机构、科学过程、人物动作与 Blender 动画执行
 - `skills/3d-animation-motion/references/animation-patterns.md`：产品启动、旋转机构、爆炸图、气流、热量和人物交互动画参考
+- `skills/3d-asset-modeling/SKILL.md`：资产拆解、下载/改造/自建决策、建模质量与授权核验
+- `skills/3d-asset-modeling/references/asset-sourcing-inspection.md`：模型来源、格式、导入检查与许可档案参考
+- `templates/3d-asset-brief.md`：单项 3D 资产需求说明模板
+- `templates/asset-register.example.json`：资产登记 JSON 示例
+- `scripts/validate_asset_manifest.py`：资产登记字段与授权状态完整性校验脚本
 - `templates/3d-shot-execution-card.md`：单镜头执行卡
 - `templates/3d-shot-plan-template.json`：结构化镜头计划示例
 - `scripts/validate_shot_plan.py`：镜头计划结构与时长校验脚本
@@ -55,9 +60,10 @@ AI 会先分析主题并给出可选切入角度，再在选题、事实、脚�
 - **镜头设计**：把场景变成明确的景别、机位、焦距、运镜路径、焦点与连续性方案。
 - **灯光与材质**：建立可信的产品表面、反射、光影层次和跨镜头渲染基准。
 - **动画与运动**：将已核验的工作过程转化为关键帧、约束或模拟，确保动作有因果、可读且可复现。
+- **模型与资产制作**：从分镜反推资产清单，决定下载、改造或自建，并检查模型质量、拆件能力和商业授权。
 - **AI 视频翻译**：将镜头设计转成模型可执行提示词，并定义参考图、首尾帧和负面约束。
 
-每个独立镜头时长必须大于 0 秒且不超过 15 秒。可使用 `python scripts/validate_shot_plan.py templates/3d-shot-plan-template.json` 检查结构化镜头计划。
+每个独立镜头时长必须大于 0 秒且不超过 15 秒。可使用 `python scripts/validate_shot_plan.py templates/3d-shot-plan-template.json` 检查结构化镜头计划。可使用 `python scripts/validate_asset_manifest.py templates/asset-register.example.json` 检查资产登记信息完整性（不构成法律许可判断或模型几何检查）。
 
 ## 中文成片规范
 
