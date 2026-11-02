@@ -41,6 +41,17 @@ AI 会先分析主题并给出可选切入角度，再在选题、事实、脚�
 - `references/visual-production.md`：3D、AI 视频与后期制作规范
 - `references/publishing-review.md`：发布、合规与数据复盘
 - `templates/production-templates.md`：可复用生产模板
+- `skills/3d-camera-cinematography/SKILL.md`：专业 3D 电影镜头设计与执行 Skill
+- `skills/3d-camera-cinematography/references/`：镜头语言、Blender 执行、AI 视频提示词规范
+- `templates/3d-shot-execution-card.md`：单镜头执行卡
+- `templates/3d-shot-plan-template.json`：结构化镜头计划示例
+- `scripts/validate_shot_plan.py`：镜头计划结构与时长校验脚本
+
+## 专业 3D 镜头 Skill
+
+当任务涉及景别、机位、焦距、运镜、构图、Blender 摄像机执行或多镜头连续性时，读取 `skills/3d-camera-cinematography/SKILL.md`。它负责把已批准的分镜转化为可执行的 Blender / AI 视频 / 混合制作镜头方案；不替代主 Skill 的选题、科学核验和脚本决策。
+
+镜头硬性规则保持一致：每个独立镜头时长大于 0 秒且不超过 15 秒。可使用 `python scripts/validate_shot_plan.py templates/3d-shot-plan-template.json` 检查结构化镜头计划。
 
 ## 推荐内容定位
 

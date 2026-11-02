@@ -155,3 +155,17 @@ description: Interactive cross-model workflow for creating photorealistic cinema
 - 视觉制作：`references/visual-production.md`
 - 发布与复盘：`references/publishing-review.md`
 - 表格模板：`templates/production-templates.md`
+
+## 9. 专业 3D 镜头 Skill 路由
+
+当用户进入分镜细化、3D 摄影机设计、镜头构图、景别/焦距/运镜、Blender 摄像机执行或跨镜头连续性设计时，按需读取 `skills/3d-camera-cinematography/SKILL.md`。
+
+路由规则：
+- 选题、资料研究、科学核验、旁白与脚本：继续使用本主 Skill，不加载镜头 Skill。
+- 需要把已批准分镜变成具体镜头语言：加载 `3d-camera-cinematography`。
+- 需要 Blender 可执行场景/摄像机/关键帧方案：同时读取其 `references/blender-execution.md`。
+- 需要适配图生视频/文生视频模型：同时读取其 `references/video-model-translation.md`。
+- 需要统一镜头术语、景别、焦距、构图和运镜选择：读取其 `references/camera-language.md`。
+- 多镜头任务：每个镜头单独输出执行卡，并检查连续性；每镜时长仍严格不超过 15 秒。
+
+该专业 Skill 是主 Skill 的下游能力模块，不得绕过主 Skill 的科学事实核验、用户确认点和全局视觉设定。模型 API、凭据和服务商接入由用户在 Skill 外部配置。

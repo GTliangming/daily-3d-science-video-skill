@@ -1,0 +1,44 @@
+{
+  "project": {
+    "title": "示例：高速吹风机工作原理",
+    "aspect_ratio": "9:16",
+    "fps": 30,
+    "visual_style": "写实电影级3D科普"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "start": 0.0,
+      "end": 8.0,
+      "duration": 8.0,
+      "purpose": "建立产品外观与主体识别",
+      "implementation": "blender",
+      "camera": {
+        "shot_size": "medium_close_up",
+        "viewpoint": "front_three_quarter",
+        "lens_mm_full_frame_equivalent": 50,
+        "distance_note": "以产品完整进入竖屏安全区为准",
+        "movement": "slow_dolly_in",
+        "start_state": "产品静止，前左侧三分之四角度",
+        "end_state": "产品主体保持完整，略靠近出风口",
+        "path": "沿产品主轴方向轻微推进",
+        "speed_profile": "ease_in_out",
+        "focus_target": "产品主体"
+      },
+      "composition": {
+        "subject_placement": "画面中央偏上",
+        "subtitle_safe_area": "底部预留字幕区域",
+        "foreground": "无",
+        "background": "简洁暗色摄影棚"
+      },
+      "continuity": {
+        "subject_lock": "沿用已批准的典型高速吹风机外观设定",
+        "screen_direction": "出风口朝画面右上",
+        "lighting": "主光从左前方，右后方轮廓光"
+      },
+      "science_notes": [
+        "本镜头只展示外观，不展示未经核实的内部结构"
+      ]
+    }
+  ]
+}
