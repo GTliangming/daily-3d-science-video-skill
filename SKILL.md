@@ -187,6 +187,8 @@ description: Interactive cross-model workflow for creating photorealistic cinema
 按需加载以下模块：
 - **镜头设计**：`skills/3d-camera-cinematography/SKILL.md`，负责景别、机位、焦距、运镜、构图和跨镜头连续性。
 - **场景构建**：`skills/3d-scene-composition/SKILL.md`，负责场景空间、主体与道具布局、前中后景、视觉层级、Blender 场景组织和场景连续性。
+- **灯光与材质**：`skills/3d-lighting-materials/SKILL.md`，负责电影级布光、材质参数、纹理、反射、色彩管理和渲染一致性。
+- **动画与运动**：`skills/3d-animation-motion/SKILL.md`，负责产品机构、物理过程、人物动作、关键帧、约束、模拟和动作时间线。
 - **AI 视频提示词**：读取 `skills/3d-camera-cinematography/references/video-model-translation.md`，负责把摄影/场景方案转成图生视频或文生视频提示词。
 - **Blender 摄影机执行**：需要具体摄像机、Rig、关键帧方案时，读取 `skills/3d-camera-cinematography/references/blender-execution.md`。
 
@@ -195,6 +197,9 @@ description: Interactive cross-model workflow for creating photorealistic cinema
 - 需要把已批准分镜变成可执行场景：加载场景构建 Skill。
 - 需要把场景和分镜转成具体镜头语言：加载镜头 Skill。
 - 需要完整的 3D 镜头执行方案时，同时加载场景构建与镜头 Skill。
+- 需要确定材质外观、灯光方案或跨镜头光照一致性时，加载灯光与材质 Skill。
+- 需要设计产品运动、内部机构、气流/热量等过程或人物动作时，加载动画与运动 Skill；涉及真实物理机制时必须先完成事实核验。
+- 需要完整 3D 制作方案时，按需组合场景、镜头、灯光材质和动画模块，不要求每个镜头都加载全部模块。
 - 多镜头任务：每个镜头单独输出执行卡，并检查连续性；每镜时长仍严格不超过 15 秒。
 
 这些专业 Skill 是主 Skill 的下游能力模块，不得绕过主 Skill 的科学事实核验、用户确认点和全局视觉设定。模型 API、凭据和服务商接入由用户在 Skill 外部配置。
