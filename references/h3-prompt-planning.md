@@ -1,87 +1,144 @@
-# H3 提示词策划适配指南
+# MiniMax H3 prompt planning adapter
 
-> 本文用于将已确认的科普视频策划方案翻译为 MiniMax H3 可用的提示词文本。它不执行视频生成，不调用 API，也不属于视频生产 Agent。
+> Planning adapter only. It converts an approved, model-independent shot plan into text for the user's external H3 workflow. It never calls an API, submits a job, downloads a result or executes media production.
 
-## 一、基本原则
+## 1. Source of truth and version discipline
 
-**导演设计先于模型提示词。** 先确定 Beat、Shot、科学信息、构图、动作、镜头运动和连续性，再按 H3 模式转换。不能因为 H3 提示词格式而把多个剪辑镜头硬塞进一个生成任务。
+The official MiniMax `h3-prompt-writing` Skill defines the mode-specific prompt structure. Use its current reference files as the authority for exact field names, label syntax, timing notation and section order. This document summarizes the planning implications; do not treat it as a replacement for the official guide.
 
-官方 H3 提示词指南区分基础模式与全参考模式。具体字段、标签、时长和对齐格式应以用户当前使用的官方 Skill、ComfyUI 节点或 API 工作流版本为准。
+If the user supplies a ComfyUI node, AutoDL wrapper or API schema, use that exact version for parameter names and supported controls. Do not mix fields from different interfaces. Mark unknown capabilities as unverified.
 
-## 二、模式选择
+## 2. Choose the mode from the actual inputs
 
-| 模式 | 输入条件 | 策划时要明确的内容 |
+| Mode | Required input / role | Planning responsibility |
 |---|---|---|
-| T2VA | 纯文本 | 完整视听时间线、镜头顺序、动作与声音 |
-| I2VA | 首帧图 | 首帧中必须锁定的构图、主体和空间；之后如何连续发展 |
-| FL2VA | 首帧 + 末帧 | 两帧之间可观察、合理且连续的运动路径 |
-| L2VA | 末帧图 | 末帧之前的合理状态，以及如何准确落到末帧 |
-| Ref2VA | 多模态参考素材 | 每个素材的职责、保留程度、在哪些镜头生效 |
+| T2VA | Text only | Build a complete audiovisual timeline |
+| I2VA | Actual first-frame image | Anchor the opening composition, then describe forward development |
+| FL2VA | First and last frame images | Describe one continuous, plausible path between them |
+| L2VA | Actual last-frame image | Infer a plausible preceding state and converge to the ending frame |
+| Ref2VA | Multiple references with distinct roles | Define subjects, concrete frame anchors, source video and audio references |
 
-不要把主体参考图误当成首帧。参考图的“身份/结构/风格/构图”职责与关键帧锚点不同。
+Do not choose I2VA just because the user has an image. An image may be a subject identity, geometry, style or composition reference rather than a first frame. If the intended role is unclear, ask one focused question.
 
-## 三、镜头描述的最小结构
+For FL2VA, prefer a continuous shot unless the user explicitly requires multiple shots. The last frame must be reached by the final shot. For L2VA, the supplied image belongs to the ending, not automatically to the opening.
 
-每个镜头至少包含：
+## 3. Separate director design from H3 translation
 
-1. **画面状态**：景别、观察角度、主体位置、背景和构图。
-2. **主体定义**：产品/部件的身份、外观、比例、材料和结构约束。
-3. **可见动作**：一个主要动作或状态变化，按因果顺序描述。
-4. **摄影机行为**：固定或一种主要运动；必要时说明运动幅度和速度。
-5. **声音归属**：画内声音、环境声、画外旁白、非叙事配乐分开。
-6. **时间关系**：镜头时长、切点、动作开始与结束状态。
-7. **连续性约束**：哪些特征必须保持不变，哪些内容允许变化。
+The approved Beat and Shot plan remains authoritative. H3 translation may:
+- express the same shot with the official H3 fields
+- clarify the reference-to-shot alignment
+- describe observable motion and sound
+- identify a shot as unsuitable for one generation and recommend splitting or precision 3D
 
-避免只写“cinematic / beautiful / 8K”等抽象词。要把信息转化成具体可见画面。
+It may not:
+- change the scientific explanation to fit a model
+- merge editorial shots that require a cut
+- promise exact geometry, physical simulation or precise cuts without evidence
+- invent dialogue or assign voiceover to a visible character
 
-## 四、参考素材职责
+## 4. Reference roles and labels
 
-建议先制作参考素材映射表：
+For each reference, identify its role before writing a prompt:
 
-| ID | 类型 | 职责 | 锁定内容 | 使用镜头 |
-|---|---|---|---|---|
-| REF-001 | 主体标准图 | 主体身份锚点 | 外观、比例、材质 | SHOT-001/002 |
-| REF-002 | 剖面结构图 | 结构锚点 | 部件位置、数量、连接 | SHOT-003/004 |
-| REF-003 | 构图图 | 构图锚点 | 景别、主体位置、空间关系 | SHOT-005 |
+| Role | What it constrains | Not automatically |
+|---|---|---|
+| Subject identity | silhouette, appearance, proportions, color, material | first frame or motion |
+| Geometry / structure | part count, relative position, connections | style or camera |
+| Style / material | rendering language, surface response, lighting | scientific truth |
+| Composition / storyboard | framing, subject placement, spatial layout | actual keyframe |
+| First / last / keyframe | a concrete time-aligned frame | general identity reference |
+| Reference video | source edit, continuation or temporal structure | a reusable subject by itself |
+| Reference audio | voice, music, sound or beat characteristics | visual content |
 
-同一张图不要被含糊地描述为“参考一切”。如果兼有多种用途，明确主职责和次职责。结构准确性必须来自可靠资料或经核验的模型，不可把 AI 生成的示意图当成事实依据。
+In Ref2VA, use the official six-section order:
+1. `subject_definitions`
+2. `summary`
+3. `retention_analysis`
+4. `detailed_description`
+5. `overall_soundscape`
+6. `non_diegetic_music`
 
-## 五、声音规划
+Keep labels stable across every section. Distinguish reusable visible subjects (`<Subject N>`) from concrete frame anchors (`<Picture N>`), source videos (`<Video N>`) and audio references (`<Audio N>`). Do not create a standalone picture label when an image only supplies a subject's appearance; cite it in that subject definition instead.
 
-科普视频默认采用第三人称普通话画外旁白。旁白不是画面人物对白：
+## 5. Base-mode prompt structure
 
-- 画外旁白：写明为 off-screen voiceover / narration，不给画面人物安排口型。
-- 角色对白：只有用户明确要求时才规划，并保持人物身份与说话人一致。
-- 环境声和物理动作声：描述真实声源，例如电机声、风声、开关声。
-- 非叙事配乐：单独描述配器、节奏和动态变化。
-- 若 H3 工作流不能可靠生成中文旁白或字幕，规划为后期配音/字幕，不强行塞进视频模型。
+For T2VA / I2VA / FL2VA / L2VA, follow the official guide's exact first-line alignment instruction for the selected mode. Then use the three core fields in this order:
 
-## 六、剪辑与时间线
+- `integrated_multimodal_description`: visible events, subjects, actions, shots, camera, speakers/dialogue and synchronized diegetic audio along the timeline.
+- `overall_soundscape`: ambient sound, physical action sounds and non-verbal human sounds across the full video.
+- `non_diegetic_music`: audience-only background music.
 
-- 一个 Shot 对应一个明确的剪辑镜头。
-- 需要硬切、换景别、换空间或换观察对象时，分成多个镜头。
-- 不要依赖一个提示词中的时间段描述来保证模型一定执行多次硬切。
-- 镜头时长服从策划 Skill 的硬规则：每个成片镜头不超过 15 秒；同时遵守用户当前工作流更严格的限制。
-- 首尾帧模式重点写清楚两帧之间的连续路径，不要把它写成多场景蒙太奇。
+Do not invent alternate field names or rearrange the sections.
 
-## 七、科普类视频的特殊约束
+### Shot description
 
-- 产品结构、部件数量、位置、运动方向和物理因果必须经过事实核验。
-- 气流、热量、电流等可视化颜色是视觉编码时，明确标注为示意，不暗示真实颜色。
-- 画面可以简化，但不能把关键因果关系画错。
-- 默认不让模型直接生成复杂中文文字；标题、标签、字幕由后期添加。
-- 真实机械运动、精确几何和多部件协同若难以由 H3 稳定表现，应在策划中标注为精确 3D/后期合成，而不是通过增加形容词解决。
+Each shot should state concrete, observable details:
+- visual style and initial composition
+- subject appearance, position and environment
+- one primary action or state change
+- shot size, angle and camera behavior
+- lighting and material cues
+- cut or continuous transition where appropriate
+- diegetic sound only when it belongs to the scene
 
-## 八、交付前检查
+For later shots, follow the official shot numbering and cut-time syntax. Do not add hard cuts inside one generated clip unless the user explicitly wants that and the workflow has been validated for it. If the edit requires several independent shots, provide separate prompts/clips for each.
 
-- [ ] 模式选择与素材条件匹配
-- [ ] 每张参考素材的职责明确
-- [ ] 镜头内容与科学知识点一致
-- [ ] 单镜头只有一个主要视觉任务
-- [ ] 动作、机位、景别和时长互相兼容
-- [ ] 切点、首尾帧对齐和总时长正确
-- [ ] 画外旁白与角色对白没有混淆
-- [ ] 环境声与配乐分类正确
-- [ ] 复杂字幕与标签安排在后期
-- [ ] 模型能力未知的要求标注为待测试
-- [ ] 没有把多个独立镜头伪装成一个连续镜头
+### Camera movement
+
+Describe camera movement as a movement type plus meaningful amplitude and speed. Use static shot when no movement adds information. State whether the camera or the subject moves. Do not append a pile of generic camera adjectives.
+
+## 6. Voiceover and sound for science explainers
+
+Default project narration is third-person Mandarin off-screen voiceover:
+- explicitly identify it as an off-screen voiceover / narration
+- do not give the visible character matching mouth movement
+- keep the exact approved Mandarin narration as its own script artifact
+- only place speech in H3's spoken-content syntax if the selected mode/workflow is intended to generate it reliably
+
+Keep four sound roles separate:
+1. narration / voiceover
+2. diegetic sound (motor, switch, airflow, impact)
+3. ambient soundscape
+4. non-diegetic music
+
+Do not repeat dialogue or diegetic music in the ambient soundscape. If the user wants a silent model output, plan voiceover, SFX and music as post-production.
+
+## 7. Chinese on-screen text
+
+Complex Chinese subtitles, labels, measurements and diagrams should be post-produced by default. Prompt for clean negative space and avoid model-generated pseudo-text. If a short visible Chinese sign is essential, preserve its exact wording and flag generation uncertainty.
+
+## 8. Per-shot prompt template
+
+Use this as a planning worksheet, then translate it into the official mode format:
+
+- Shot ID / final timeline / duration:
+- H3 mode and why:
+- Reference IDs and roles:
+- Visual style and starting composition:
+- Subject identity and geometry locks:
+- Single visual task:
+- Main action / state change:
+- Shot size / angle / focus:
+- Camera movement (static or one motivated move):
+- Start state → end state:
+- Environment / lighting / materials:
+- Diegetic sound:
+- Voiceover treatment:
+- Continuity constraints:
+- Negative constraints:
+- Post-production items:
+- Feasibility and known limitations:
+
+## 9. Preflight
+
+- [ ] Mode matches the actual input assets and intended reference roles.
+- [ ] Official first-line alignment instruction and field order are correct.
+- [ ] Reference labels are stable and used consistently.
+- [ ] Every shot describes visible and audible events, not only abstract mood.
+- [ ] One primary action and one coherent camera behavior per shot.
+- [ ] Shot timing matches the approved storyboard and H3 workflow limit.
+- [ ] Required cuts are represented as separate shots/clips where needed.
+- [ ] Voiceover is off-screen; character dialogue is only present when requested.
+- [ ] Ambient sound, diegetic sound and non-diegetic music are separated.
+- [ ] Complex Chinese text is assigned to post-production by default.
+- [ ] Unsupported model behavior is labeled unverified, not promised.
