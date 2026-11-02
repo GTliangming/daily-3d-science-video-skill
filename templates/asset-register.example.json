@@ -1,0 +1,27 @@
+{
+  "project": "daily-3d-science-video",
+  "units": "METERS",
+  "assets": [
+    {
+      "asset_id": "ASSET_HAIR_DRYER_BODY",
+      "name_zh": "高速吹风机外壳",
+      "category": "hero_product",
+      "priority": "B",
+      "production_method": "custom_model",
+      "source_url": "",
+      "creator": "",
+      "license_name": "Original work",
+      "license_url": "",
+      "commercial_use": "allowed",
+      "modification": "allowed",
+      "attribution_required": false,
+      "attribution_text": "",
+      "license_status": "CLEAR",
+      "file_path": "assets/models/final/hair_dryer_body.blend",
+      "format": "BLEND",
+      "dimensions_m": [0.25, 0.08, 0.08],
+      "animated": false,
+      "notes": "示例占位尺寸，正式制作时必须按已核实的产品尺寸修订。"
+    }
+  ]
+}
