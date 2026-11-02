@@ -184,6 +184,7 @@ description: Interactive planning-only Skill for realistic 3D science explainer 
 - 表格模板：`templates/production-templates.md`
 - 全片视觉设定：`templates/visual-bible-template.md`
 - 单镜头提示词文件：`templates/shot-prompt-file-template.md`
+- H3 提示词策划适配（用户指定 MiniMax H3 时才读取）：`references/h3-prompt-planning.md`
 
 ## 10. 专业 3D Skill 路由
 
@@ -194,7 +195,8 @@ description: Interactive planning-only Skill for realistic 3D science explainer 
 - **动画与运动**：`skills/3d-animation-motion/SKILL.md`，负责产品机构、物理过程、人物动作、关键帧、约束、模拟和动作时间线。
 - **模型与资产制作**：`skills/3d-asset-modeling/SKILL.md`，负责资产清单、下载/改造/自建决策、模型质量、拆件、格式和授权登记。
 - **参考图一致性**：`skills/reference-image-consistency/SKILL.md`，负责 Visual Bible 风格锁定、主风格参考图、主体/结构锚点、模型适配提示词、分批生成和一致性验收。
-- **AI 视频提示词**：读取 `skills/3d-camera-cinematography/references/video-model-translation.md`，负责把摄影/场景方案转成图生视频或文生视频提示词。
+- **通用 AI 视频提示词策划**：读取 `skills/3d-camera-cinematography/references/video-model-translation.md`，负责把摄影/场景方案转成模型无关的提示词草案。
+- **MiniMax H3 提示词策划**：用户明确指定 H3 时，额外读取 `references/h3-prompt-planning.md`；只负责将已确认镜头翻译为 H3 提示词，不执行模型调用。
 - **Blender 摄影机执行**：需要具体摄像机、Rig、关键帧方案时，读取 `skills/3d-camera-cinematography/references/blender-execution.md`。
 
 路由规则：
